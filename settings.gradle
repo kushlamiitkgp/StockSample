@@ -2,4 +2,5 @@ rootProject.name = 'StockSample'
 
 include 'AuthMgmt'
 include 'UserMgmt'
+include 'StockMgmt'
 //include 'shared-lib'  // Optional

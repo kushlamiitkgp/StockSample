@@ -1,4 +1,5 @@
 package com.stock.usermgmt.database;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

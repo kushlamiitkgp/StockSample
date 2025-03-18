@@ -39,9 +39,11 @@ dependencies {
 	// Spring Boot Test Dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+// Gradle - BOM Import
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.3"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.0"
 	}
 }
 
