@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+}
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	gradlePluginPortal()
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {	
+	// Feign client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// For Feign logging/debug
+	implementation 'io.github.openfeign:feign-slf4j:12.1'
+
+	// Spring Boot Starter for Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Spring Boot Starter for JPA and Hibernate
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Lombok (to reduce boilerplate code)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Validation for input data
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// PostgreSQL Driver
+	implementation 'org.postgresql:postgresql:42.6.0'
+
+	// Flyway Database Migration
+	implementation 'org.flywaydb:flyway-core:8.5.13'
+
+	// Spring Boot Test Dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.3"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
