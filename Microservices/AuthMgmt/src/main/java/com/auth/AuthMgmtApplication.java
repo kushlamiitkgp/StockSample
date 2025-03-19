@@ -8,7 +8,7 @@ public class AuthMgmtApplication {
 
 	public static void main(String[] args) {
 
-		System.out.println("AuthMgmtApplication ->>> main");
+		System.out.println("AuthMgmtApplication ->>> main - ");
 		SpringApplication.run(AuthMgmtApplication.class, args);
 	}
 

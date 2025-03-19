@@ -1,14 +1,14 @@
-plugins {
-	id 'org.springframework.boot' version '3.2.0'
-    id 'io.spring.dependency-management' version '1.1.0'
-    id 'java'
-}
-repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	gradlePluginPortal()
-	maven { url 'https://repo.spring.io/snapshot' }
-}
+//plugins {
+//	id 'org.springframework.boot' version '3.2.0'
+//    id 'io.spring.dependency-management' version '1.1.0'
+//    id 'java'
+//}
+//repositories {
+//	mavenCentral()
+//	maven { url 'https://repo.spring.io/milestone' }
+//	gradlePluginPortal()
+//	maven { url 'https://repo.spring.io/snapshot' }
+//}
 
 dependencies {	
 	// Feign client
@@ -38,12 +38,15 @@ dependencies {
 
 	// Spring Boot Test Dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 }
 
 // Gradle - BOM Import
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.0"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.4"
 	}
 }
 
@@ -51,7 +54,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// Rename JAR
+bootJar {
+	archiveFileName = "${project.name}.jar"  // Optional: custom name
+}
+
 jar {
-	archiveFileName = "${project.name}.jar"
+	enabled = false  // Disable plain JAR
 }
