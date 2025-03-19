@@ -1,6 +1,23 @@
 rootProject.name = 'StockSample'
 
-include 'AuthMgmt'
-include 'UserMgmt'
-include 'StockMgmt'
-//include 'shared-lib'  // Optional
+// Only include actual projects
+include ':AuthMgmt'
+project(':AuthMgmt').projectDir = file('Microservices/AuthMgmt')
+
+include ':UserMgmt'
+project(':UserMgmt').projectDir = file('Microservices/UserMgmt')
+
+include ':StockMgmt'
+project(':StockMgmt').projectDir = file('Microservices/StockMgmt')
+
+include ':ApiGateway'
+project(':ApiGateway').projectDir = file('Microservices/ApiGateway')
+
+include ':ServiceRegistry'
+project(':ServiceRegistry').projectDir = file('Microservices/ServiceRegistry')
+
+include ':ConfigServer'
+project(':ConfigServer').projectDir = file('Microservices/ConfigServer')
+
+// include ':shared-lib'
+// project(':shared-lib').projectDir = file('shared-lib')
