@@ -50,3 +50,8 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Rename JAR
+jar {
+	archiveFileName = "${project.name}.jar"
+}

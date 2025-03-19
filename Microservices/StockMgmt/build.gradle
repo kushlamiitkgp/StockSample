@@ -33,3 +33,8 @@ dependencies {
 	// Flyway Database Migration
 	implementation 'org.flywaydb:flyway-core:8.5.13'
 }
+
+// Rename JAR
+jar {
+	archiveFileName = "${project.name}.jar"
+}
