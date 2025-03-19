@@ -44,18 +44,9 @@ Service Registry
 **************************************************************************
 
 Client → http://localhost:8080/auth/login → ApiGateway → authmgmt service
+![img_1.png](Helpers/img_1.png)
 
-
-
-**************************************************************************
-Service	       * Port	* Spring_App_Name  *  Special_Dependency
-****************************************** * *******************************
-AuthMgmt	   * 8082	* authmgmt	       *  JPA + Eureka Client + Config
-UserMgmt	   * 8081	* usermgmt	       *  JPA + Eureka Client + Config
-StockMgmt	   * 8083	* stockmgmt	       *  JPA + Eureka Client + Config
-ApiGateway	   * 8080	* api-gateway	   *  Gateway + Eureka Client + Config
-ConfigServer   * 8888	* config-server	   *  Config Server + Eureka Client
-ServiceRegistry* 8761	* service-registry *  Eureka Server
+****************************************************************************
 **************************************************************************
 
 Matching Logic while fetching and applying Configurations(Resolution Order)
