@@ -1,0 +1,56 @@
+docker network create microservice-net 
+docker network inspect microservice-net
+
+docker build -t config-server:latest .
+docker run -d -p 8888:8888 --name config-server --network microservice-net config-server:latest
+
+docker build -t service-registry:latest .
+docker run -d -p 8761:8761 --name service-registry --network microservice-net service-registry:latest
+
+
+docker build -t api-gateway:latest .
+docker run -d -p 8080:8080 --name api-gateway  --network microservice-net api-gateway:latest
+
+docker build -t user-mgmt:latest .
+docker run -d -p 8082:8082 --name user-mgmt  --network microservice-net user-mgmt:latest
+
+docker build -t event-service:latest .
+docker run -d -p 9001:9001 --name event-service  --network microservice-net event-service:latest
+
+docker build -t booking-service:latest .
+docker run -d -p 9002:9002 --name booking-service --network microservice-net booking-service:latest
+
+
+## Running Dockerized version of Postgresql
+docker run -d  --name postgres-db  --network microservice-net -e POSTGRES_USER=postgres  -e POSTGRES_PASSWORD=1234  -e POSTGRES_DB=stockdb  -p 5434:5432  postgres:14
+
+
+docker exec -it postgres-db psql -U postgres
+Then inside psql shell:
+CREATE DATABASE user_db;
+CREATE DATABASE auth_db;
+CREATE DATABASE ticketdb;
+
+docker stop contAINERname
+docker rm contAINERname
+
+docker build -t auth-mgmt:latest .
+docker run -p 8081:8081 --name auth-mgmt  --network microservice-net auth-mgmt:latest
+
+
+#Running Mongo DB using Container
+docker run -d --name mongodb --network microservice-net  -p 27017:27017   -e MONGO_INITDB_DATABASE=bookingdb   mongo:latest
+
+#client to view mongo db database
+docker run -d  --network microservice-net -p 9081:8081 --link mongodb:mongo --name mongo-express mongo-express
+
+# Start Zookeeper
+docker run -d --name zookeeper --network microservice-net -p 2181:2181 -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 confluentinc/cp-zookeeper:7.5.0
+
+
+# Start Kafka (depends on Zookeeper)
+docker run -d --name kafka --network microservice-net -p 9092:9092 -e KAFKA_BROKER_ID=1 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://host.docker.internal:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka:7.5.0
+
+
+list kafka topics one it is run
+docker exec -it kafka kafka-topics --bootstrap-server localhost:9092 --list

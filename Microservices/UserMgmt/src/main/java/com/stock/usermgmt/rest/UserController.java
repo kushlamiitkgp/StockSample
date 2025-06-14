@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/user")
+//@RestController
+//@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -16,6 +16,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+        System.out.println("login request : "+request.toString());
         String token = userService.login(request.getUsername(), request.getPassword());
         return ResponseEntity.ok(token);
     }

@@ -37,7 +37,7 @@ public class LoginHandler {
         String encryptedPassword = passwordService.enCryptPwd(password);
 
         // Create a new User and set the username and encrypted password
-        users = Users.builder().username(username).password(encryptedPassword)
+        users = Users.builder().username(username).password(encryptedPassword).level(1).role("User")
                 .email(username.concat("@gmail.com")).build();
 
         userService.saveUser(users);

@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService{
 
     public String login(String username, String password) {
         AuthRequest request = new AuthRequest(username, password);
+        System.out.println("authentication request from auth server "+request.toString());
         ResponseEntity<AuthenticationResponse> response = authClient.authenticate(request);
         return response.getBody().getToken(); // JWT token
     }

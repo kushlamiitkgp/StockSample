@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthRequest authRequest) {
-
+        System.out.println("login request came  - "+authRequest.toString());
         AuthenticationResponse response = authenticationService.authenticate(authRequest);
         return ResponseEntity.ok(response);
     }
@@ -35,6 +35,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody Users users) {
+        System.out.println("register request came -"+users.toString());
         if (userRepo.findByUsername(users.getUsername()).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Username already exists.");

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "jwt-auth-service", url = "http://localhost:8081")
+@FeignClient(name = "jwt-auth-service", url = "http://auth-mgmt:8081")
 public interface AuthFeignClient {
 
     @PostMapping("/auth/login")
