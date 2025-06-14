@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users11")
+@RequestMapping("/users")
 public class LoginController {
 
     @Autowired
@@ -35,5 +35,15 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Already username exist");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("Signup successful");
+    }
+
+    @GetMapping
+    public ResponseEntity<String> check() {
+        return ResponseEntity.ok("Users APIGW Check successful");
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<String> getALLUsers() {
+        return ResponseEntity.ok("Users APIGW Check successful");
     }
 }

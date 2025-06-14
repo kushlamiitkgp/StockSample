@@ -19,5 +19,8 @@ project(':ServiceRegistry').projectDir = file('Microservices/ServiceRegistry')
 include ':ConfigServer'
 project(':ConfigServer').projectDir = file('Microservices/ConfigServer')
 
-// include ':shared-lib'
-// project(':shared-lib').projectDir = file('shared-lib')
+include ':BookingService'
+project(':BookingService').projectDir = file('Microservices/BookingService')
+
+include ':EventService'
+project(':EventService').projectDir = file('Microservices/EventService')
