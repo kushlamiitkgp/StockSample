@@ -2,6 +2,7 @@ package com.ticket.eventservice.controller;
 
 import com.ticket.eventservice.model.Event;
 import com.ticket.eventservice.repository.EventRepository;
+import com.ticket.eventservice.service.SeatAvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +50,17 @@ public class EventController {
     @GetMapping
     public ResponseEntity<String> check() {
         return ResponseEntity.ok("Event G/W Check successful");
+    }
+
+    @Autowired
+    private SeatAvailabilityService seatService;
+
+    @GetMapping("/{id}/seats")
+    public int getSeats(@PathVariable Long id) {
+        Integer cached = seatService.getCachedSeats(id);
+        if (cached != null) return cached;
+        int actualSeats = 50; // Sample fallback, fetch from DB in real case
+        seatService.cacheSeats(id, actualSeats);
+        return actualSeats;
     }
 }

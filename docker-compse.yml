@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice-net
+
+  config-server:
+    build: ./Microservices/ConfigServer
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    networks:
+      - microservice-net
+
+  service-registry:
+    build: ./Microservices/ServiceRegistry
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - microservice-net
+
+  auth-mgmt:
+    build: ./Microservices/AuthMgmt
+    container_name: auth-mgmt
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - service-registry
+    networks:
+      - microservice-net
+
+  user-mgmt:
+    build: ./Microservices/UserMgmt
+    container_name: user-mgmt
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+      - service-registry
+    networks:
+      - microservice-net
+
+  stock-mgmt:
+    build: ./Microservices/StockMgmt
+    container_name: stock-mgmt
+    ports:
+      - "8083:8083"
+    depends_on:
+      - config-server
+      - service-registry
+    networks:
+      - microservice-net
+
+  eventservice:
+    build:
+      context: ./EventService
+    ports:
+      - "9001:9001"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/eventdb
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - kafka
+      - redis
+    networks:
+      - microservice-net
+
+  bookingservice:
+    build:
+      context: ./BookingService
+    ports:
+      - "9002:9002"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/bookingdb
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - kafka
+      - redis
+      - eventservice
+    networks:
+      - microservice-net
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - microservice-net
+
+  kafka:
+    image: bitnami/kafka:3.4.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - microservice-net
+
+  mongodb:
+    image: mongo:5
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - microservice-net
+
+networks:
+  microservice-net:
+    driver: bridge

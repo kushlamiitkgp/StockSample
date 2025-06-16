@@ -26,6 +26,8 @@ jar {
 
 dependencies {
 
+	// Feign client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	// Kafka
 	implementation 'org.springframework.kafka:spring-kafka'
 
@@ -61,6 +63,10 @@ dependencies {
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 }
 
 // Gradle - BOM Import

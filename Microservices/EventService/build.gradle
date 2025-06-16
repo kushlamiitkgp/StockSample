@@ -25,6 +25,8 @@ jar {
 }
 
 dependencies {
+	// Feign client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 	// Spring Boot Starter for Web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -50,6 +52,9 @@ dependencies {
 
 
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+
 }
 
 // Gradle - BOM Import

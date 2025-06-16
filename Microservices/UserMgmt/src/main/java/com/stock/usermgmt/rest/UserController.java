@@ -1,33 +1,43 @@
 package com.stock.usermgmt.rest;
 
-import com.stock.usermgmt.feignclient.AuthRequest;
-import com.stock.usermgmt.service.UserService;
+import com.stock.usermgmt.model.LoginRequest;
+import com.stock.usermgmt.model.RegisterRequest;
+import com.stock.usermgmt.model.UserDTO;
+import com.stock.usermgmt.service.LoginHandler;
+import com.stock.usermgmt.service.SignupHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController
-//@RequestMapping("/user")
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    LoginHandler loginHandler;
+    @Autowired
+    SignupHandler signupHandler;
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
-        System.out.println("login request : "+request.toString());
-        String token = userService.login(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(token);
+    @PostMapping("/validate")
+    public UserDTO validate(@RequestBody LoginRequest req) {
+        System.out.println("user login/validation request" + req.toString());
+        return loginHandler.login(req);
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<String> validate(@RequestParam("token") String token) {
-        boolean isValid = userService.validateToken(token);
-        if (isValid) {
-            return ResponseEntity.ok("Token valid");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token invalid");
-        }
+    @PostMapping("/create")
+    public boolean create(@RequestBody RegisterRequest req) {
+        System.out.println("user creation/ register request" + req.toString());
+        return signupHandler.signup(req);    }
+
+
+    @GetMapping
+    public ResponseEntity<String> check() {
+        return ResponseEntity.ok("UserService call from APIGW Check successful");
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<String> getALLUsers() {
+        return ResponseEntity.ok("Users APIGW Check successful");
     }
 }
+

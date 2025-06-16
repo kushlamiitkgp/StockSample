@@ -1,7 +1,8 @@
 package com.stock.usermgmt.service;
 
-import com.stock.usermgmt.database.LoginData;
 import com.stock.usermgmt.database.Users;
+import com.stock.usermgmt.model.LoginRequest;
+import com.stock.usermgmt.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,33 +17,15 @@ public class LoginHandler {
         this.userService = userService;
     }
 
-    public boolean login(LoginData loginData){
-        Users users = userService.getUser(loginData.getUsername())
+    public UserDTO login(LoginRequest loginData){
+
+        Users user = userService.getUser(loginData.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found : "+loginData.getUsername()));
 
-        return passwordService.matchPassword(loginData.getPassword(), users.getPassword());
+        boolean correctPassword = passwordService.matchPassword(loginData.getPassword(), user.getPassword());
+        if(!correctPassword)
+            return null;
+        return UserDTO.builder().role(user.getRole().name()).username(user.getUsername()).build();
     }
 
-    public boolean signup(LoginData signupData){
-        String username = signupData.getUsername();
-        String password =  signupData.getPassword();
-        Users users = userService.getUser(username)
-                .orElse(null);
-
-        if (null != users) {
-            return false;
-        }
-
-        // Encrypt the password using BCrypt
-        String encryptedPassword = passwordService.enCryptPwd(password);
-
-        // Create a new User and set the username and encrypted password
-        users = Users.builder().username(username).password(encryptedPassword).level(1).role("User")
-                .email(username.concat("@gmail.com")).build();
-
-        userService.saveUser(users);
-
-        return true;
-
-    }
 }

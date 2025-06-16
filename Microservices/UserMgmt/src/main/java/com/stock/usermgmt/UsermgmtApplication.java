@@ -16,7 +16,7 @@ public class UsermgmtApplication {
 	public static void main(String[] args) {
 
 
-		log.info("UsermgmtApplication::main");
+		log.info("UsermgmtApplication-> Handles registration and role storage.\n");
 		SpringApplication.run(UsermgmtApplication.class, args);
 	}
 

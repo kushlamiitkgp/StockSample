@@ -1,5 +1,6 @@
 package com.stock.usermgmt.database;
 
+import com.stock.usermgmt.model.UsersRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,10 +27,14 @@ public class Users {
     private String password;  // Store encrypted password
 
     private String email;
-    private String role;
+
+
+    @Enumerated(EnumType.STRING)
+    private UsersRole role;
+
     private int level; // Authorization level for stocks
 
     private Boolean is_verified;
-    private Timestamp created_at;
+    private LocalDateTime created_at;
 
 }

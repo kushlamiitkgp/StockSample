@@ -11,14 +11,13 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/dontuse")
 public class ApiController {
 
-        @GetMapping("/protected")
-        public ResponseEntity<String> protectedEndpoint() {
-            return ResponseEntity.ok("You have access to the protected endpoint!");
-        }
-
+    @GetMapping("/protected")
+    public ResponseEntity<String> protectedEndpoint() {
+        return ResponseEntity.ok("You have access to the protected endpoint!");
+    }
 
     @GetMapping("/userinfo")
     public ResponseEntity<String> getUserInfo(@AuthenticationPrincipal Jwt jwt) {

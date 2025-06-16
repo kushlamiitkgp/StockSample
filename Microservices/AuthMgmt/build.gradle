@@ -12,15 +12,16 @@ repositories {
 }
 
 dependencies {
+	// Feign client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+//
+//	// For Feign logging/debug
+//	implementation 'io.github.openfeign:feign-slf4j:12.1'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'com.auth0:java-jwt:4.2.1'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.h2database:h2'
-	implementation 'org.postgresql:postgresql'
-	implementation 'org.flywaydb:flyway-core'
 
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
@@ -28,10 +29,11 @@ dependencies {
 
 	implementation 'org.projectlombok:lombok:1.18.28'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
-//	implementation 'org.springframework.security:spring-security-oauth2-authorization-server:1.1.2'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 }
 
 dependencyManagement {
